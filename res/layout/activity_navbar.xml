@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+	android:background="#282b2c"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" 
+    >
+
+      <ImageButton
+        android:id="@+id/nav_bar_btn_left"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:onClick="onNavBarLeftButtonClick"
+        android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/nav_bar_tv_title"
+        android:layout_width="0dip"
+    	android:layout_height="40dip"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:text="无标题"
+        android:background="#282b2c"
+        android:onClick="onNavBarTitleClick"
+        />
+
+    <Button
+        android:id="@+id/nav_bar_btn_right"
+        android:layout_width="0dip"
+    	android:layout_height="40dip"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:background="#282b2c"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:onClick="onNavBarRightButtonClick"
+        android:text="设置"
+        />
+
+</LinearLayout>

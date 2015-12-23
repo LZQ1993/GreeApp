@@ -1,0 +1,21 @@
+{
+ "resultcode":"1",
+ "currentpage":"1",
+ "totalpage":"20",
+ "rowsofapage":"18",
+ "result":[ {"WorkID":"1001","WorkType":"安装","AppointTime":"2015-10-10 12:20",
+             "AssignTime":"2015-10-10 12:20","Remark":"XXXXX","ClientName":"1001",
+             "ClientTel1":"13591990221","ClientTel2":"13591990221","InstallAddress":"DDDDDDD",
+             "SaleOrder":"1001-1","BuyTime":"2015-10-10 12:20","SaleDepartment":"XXXX",
+             "ProductList":[{ "ProductModel":"sss","ProductNumber":"1","ProductType":[
+                                                                       {"SubProductID":"0001"}
+                                                                       ]
+                             },
+                             { "ProductModel":"www","ProductNumber":"1","ProductType":[
+                                                                       {"SubProductID":"11"}
+                                                                       ]
+                             }
+            ]
+            }
+         ]
+ }

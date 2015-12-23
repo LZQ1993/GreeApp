@@ -1,0 +1,13 @@
+{
+ "resultcode":"1",
+ "currentpage":"1",
+ "totalpage":"20",
+ "rowsofapage":"18",
+"result":[
+           {"WorkID":"1","WorkType":"安装","ClientName":"李1","ClientTel":"13591990221","ClientAddress":"XXXX","FinishTime":"2015-10-10 12:20"},
+           {"WorkID":"2","WorkType":"维护","ClientName":"李2","ClientTel":"13591990221","ClientAddress":"YYYY","FinishTime":"2015-11-10 13:20"},
+           {"WorkID":"3","WorkType":"维护","ClientName":"李3","ClientTel":"13591990221","ClientAddress":"XXXX","FinishTime":"2015-10-10 12:20"},
+           {"WorkID":"4","WorkType":"安装","ClientName":"李4","ClientTel":"13591990221","ClientAddress":"XXXX","FinishTime":"2015-10-10 12:20"},
+           {"WorkID":"5","WorkType":"维护","ClientName":"李5","ClientTel":"13591990221","ClientAddress":"XXXX","FinishTime":"2015-10-10 12:20"}
+         ]
+ }

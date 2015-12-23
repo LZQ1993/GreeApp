@@ -1,0 +1,10 @@
+{
+ "resultcode":"1",
+ "currentpage":"1",
+ "totalpage":"20",
+ "rowsofapage":"18",
+ "result":[
+           {"WorkID":"1","WorkType":"安装","ClientName":"李四","ClientTel":"13591994545","ClientAddress":"XXXX","AssignTime":"2015-10-10 12:20"},
+           {"WorkID":"2","WorkType":"维护","ClientName":"李四2","ClientTel":"13892994545","ClientAddress":"YYYY","AssignTime":"2015-11-10 13:20"}
+         ]
+ }

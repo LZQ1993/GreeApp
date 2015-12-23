@@ -1,0 +1,8 @@
+{
+ "resultcode":"1",
+ "currentpage":"1",
+ "totalpage":"20",
+ "rowsofapage":"18",
+ "result":[{"StaffName":"李志强","NetPointName":"辽工大",
+            "WorkWaitedNumber":"1","WorkUnderProcNumber":"3"}]
+ }

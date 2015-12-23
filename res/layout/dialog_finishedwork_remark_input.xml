@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+	android:orientation="vertical"
+    android:background="#FFFFFFFF">
+
+	<TextView 
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="完工备注"
+		android:textColor="#FF000000"
+		android:textSize="16sp"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		/>
+	    
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:orientation="horizontal"
+		android:gravity="center_vertical"
+		>
+	
+		<EditText
+		    android:id="@+id/dialog_finishedRemark"
+		    android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="不超过50字"
+	        android:padding="5dp"
+	        android:gravity="top|left"
+	        android:ellipsize="middle"
+	        android:inputType="textMultiLine"
+            android:minLines="3"
+	        android:background="@drawable/pc_edittext_shape"
+	        android:singleLine="false"
+	        android:maxLength="50"
+		    />	    
+	</LinearLayout>
+
+</LinearLayout>

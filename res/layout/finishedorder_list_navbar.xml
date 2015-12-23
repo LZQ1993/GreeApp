@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+    android:background="#282b2c"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/fo_list_nav_bar_btn_left"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:onClick="onNavBarLeftButtonClick"
+        android:src="@drawable/abc_ic_ab_back_mtrl_am_alpha"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/nav_bar_tv_title"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="3"
+        android:background="#282b2c"
+        android:gravity="center"
+        android:onClick="onNavBarTitleClick"
+        android:singleLine="true"
+        android:text="工单列表"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/nav_bar_btn_right"
+        android:layout_width="0dip"
+        android:layout_height="40dip"
+        android:layout_weight="1"
+        android:background="#282b2c"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+</LinearLayout>

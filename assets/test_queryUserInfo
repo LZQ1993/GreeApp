@@ -1,0 +1,8 @@
+{
+ "resultcode":"1",
+ "currentpage":"1",
+ "totalpage":"20",
+ "rowsofapage":"18",
+"result":[{"UserName":"13591990221","Name":"李志强","WebName":"辽工大","UserSex":"男",
+           "UserTel":"13591991100","UserAddress":"辽宁锦州开发区"}]
+ }
