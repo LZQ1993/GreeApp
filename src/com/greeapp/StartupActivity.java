@@ -43,6 +43,7 @@ public class StartupActivity extends Activity {
 				if (AppInfo.isNewVersion()) {
 					iSqlHelper.CreateTable("com.greeapp.Entity.UserMessage");
 					iSqlHelper.CreateTable("com.greeapp.Entity.LocalCollectData");
+					iSqlHelper.CreateTable("com.greeapp.Entity.LocalWorkState");
 					intent.setClass(StartupActivity.this, LoginActivity.class);
 					intent.putExtra("goto", MainActivity.class.getName());
 					AppInfo.markCurrentVersion(); // 标记当前版本

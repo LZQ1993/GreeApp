@@ -1,13 +1,18 @@
 package com.greeapp.BroadcastReceiver;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.greeapp.LoginActivity;
 import com.greeapp.MainActivity;
+import com.greeapp.StartupActivity;
 import com.greeapp.Assistant.PushUtil;
 import com.greeapp.Infrastructure.CWDomain.GlobalVariables;
+import com.greeapp.Infrastructure.CWSqliteManager.ISqlHelper;
+import com.greeapp.Infrastructure.CWSqliteManager.SqliteHelper;
 
 import cn.jpush.android.api.JPushInterface;
 import android.content.BroadcastReceiver;
@@ -39,14 +44,21 @@ public class MyPushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
         	
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-            Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-            
-        	//打开自定义的Activity
-        	Intent i = new Intent(context,MainActivity.class);
-        	i.putExtras(bundle);
-        	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-        	context.startActivity(i);
-        	
+        	ISqlHelper iSqlHelper = new SqliteHelper(null,context);
+        	List<Object> list = iSqlHelper.Query("com.greeapp.Entity.UserMessage",null);
+    		if (list.size() > 0) {
+    			//打开自定义的Activity
+            	Intent i = new Intent(context,MainActivity.class);
+            	i.putExtras(bundle);
+            	i.putExtra("IsShow", "1");
+            	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            	context.startActivity(i);
+    		}else{
+    			Intent i = new Intent(context,StartupActivity.class);
+            	i.putExtras(bundle);
+            	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            	context.startActivity(i);
+    		}    	
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..

@@ -70,6 +70,8 @@ public class MainActivity extends FragmentActivity {
 				Toast.makeText(this, "再按一次返回键退出", Toast.LENGTH_SHORT).show();
 				firstBackKeyTime = System.currentTimeMillis();
 			} else {
+				ISqlHelper iSqlHelper = new SqliteHelper(null,getApplicationContext());
+				iSqlHelper.SQLExec("delete from UserMessage");// 删除表中原有的数据，保证只有一条
 				finish();
 				System.exit(0); // 凡是非零都表示异常退出!0表示正常退出!
 			}

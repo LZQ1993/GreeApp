@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.greeapp.Fragment.LoginFragment;
 import com.greeapp.Infrastructure.CWActivity.SingleFragmentActivity;
+import com.greeapp.Infrastructure.CWSqliteManager.ISqlHelper;
+import com.greeapp.Infrastructure.CWSqliteManager.SqliteHelper;
 
 public class LoginActivity extends SingleFragmentActivity {
 	private long firstBackKeyTime = 0;
@@ -25,7 +27,9 @@ public class LoginActivity extends SingleFragmentActivity {
 			{
 				Toast.makeText(this, "再按一次返回键退出", Toast.LENGTH_SHORT).show();
 				firstBackKeyTime = System.currentTimeMillis();
-			} else {			
+			} else {	
+				ISqlHelper iSqlHelper = new SqliteHelper(null,getApplicationContext());
+				iSqlHelper.SQLExec("delete from UserMessage");// 删除表中原有的数据，保证只有一条
 				finish();
 				System.exit(0); // 凡是非零都表示异常退出!0表示正常退出!
 			}

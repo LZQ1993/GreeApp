@@ -117,19 +117,21 @@ public class PasswordChangeFragment extends DataRequestFragment implements OnCli
 						if (msg.getResult().equals("1")) {	
 							new AlertDialog.Builder(getActivity())
 							.setTitle("提示")
-							.setMessage(msg.tip+",请重新登录")
+							.setMessage(msg.tip)
 							.setPositiveButton("确定",
 							new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
+									ISqlHelper iSqlHelper = new SqliteHelper(null,mContext);					
+									UserMessage userMessage = new UserMessage();
+									userMessage.Indexmy = "1";
+									userMessage.Password = et_passwordok.getText().toString();
+									iSqlHelper.Update(userMessage);	
+									
 									et_oldpassword.setText("");
 									et_passwordok.setText("");
-									et_newpassword.setText("");
-									Intent intent = new Intent();
-									intent.setClass(mContext, LoginActivity.class);
-									intent.putExtra("goto",UserCenterActivity.class.getName());
-									startActivity(intent);
+									et_newpassword.setText("");			
 									return;
 								}
 							})					

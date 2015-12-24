@@ -28,4 +28,5 @@ public class UserCenterActivity extends SingleFragmentActivity {
 		return _fragment;
 	}
 
+	
 }

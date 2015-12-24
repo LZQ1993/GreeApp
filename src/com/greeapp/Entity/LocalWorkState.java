@@ -1,7 +1,8 @@
 package com.greeapp.Entity;
 
+import com.greeapp.Infrastructure.CWDomain.EntityBase;
 
-public class WorkState {
+public class LocalWorkState extends EntityBase{
 	public String StaffName;//员工姓名
 	public String NetPointName;//网点名称
 	public String WorkWaitedNumber;//待接工单数

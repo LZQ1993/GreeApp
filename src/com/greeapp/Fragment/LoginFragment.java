@@ -1,8 +1,5 @@
 package com.greeapp.Fragment;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +25,7 @@ import android.widget.Toast;
 
 import com.greeapp.R;
 import com.greeapp.Assistant.PhoneInfo;
-import com.greeapp.Entity.OrderDetail;
 import com.greeapp.Entity.ReturnTransactionMessage;
-import com.greeapp.Entity.UploadData;
 import com.greeapp.Entity.UserMessage;
 import com.greeapp.Infrastructure.CWDataDecoder.DataResult;
 import com.greeapp.Infrastructure.CWDataDecoder.JsonDecode;
@@ -186,6 +180,7 @@ public class LoginFragment extends DataRequestFragment {
 							if (gotoClz != null) {
 								Intent intent = new Intent(mContext, gotoClz);
 								intent.putExtra("UserID", edt_username.getText().toString());
+								intent.putExtra("IsShow", "0");
 								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 								startActivity(intent);

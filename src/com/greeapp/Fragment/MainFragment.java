@@ -4,13 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.greeapp.R;
+import com.greeapp.Entity.LocalWorkState;
 import com.greeapp.Entity.UserMessage;
 import com.greeapp.Entity.WorkState;
 import com.greeapp.FinishedOrder.Activity.FinishedOrderMainActivity;
@@ -34,9 +31,7 @@ import com.greeapp.Infrastructure.CWFragment.DataRequestFragment;
 import com.greeapp.Infrastructure.CWSqliteManager.ISqlHelper;
 import com.greeapp.Infrastructure.CWSqliteManager.SqliteHelper;
 import com.greeapp.WaitAcceptOrder.Activity.WaitAcceptOrderListActivity;
-import com.greeapp.WaitWorkOrder.Activity.DataCollectionActivity;
 import com.greeapp.WaitWorkOrder.Activity.WaitWorkOrderListActivity;
-import com.greeapp.WaitWorkOrder.Fragment.WaitWorkOrderListFragment;
 
 public class MainFragment extends DataRequestFragment implements OnClickListener {
 	LinearLayout ll_infoQuery,ll_finishedOrder,ll_waitAcceptOrder,ll_waitWorkOrder;
@@ -46,10 +41,12 @@ public class MainFragment extends DataRequestFragment implements OnClickListener
 	private TextView tv_UserRealName,tv_WebName,tv_WorkWaitedNumber,tv_WorkUnderProcNumber;
 	ProgressDialog progressDialog;
 	Button btn_refresh;
+	private String IsShow;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = getActivity().getApplicationContext();
+		IsShow = getActivity().getIntent().getStringExtra("IsShow");
 		Notifications.add(currentNotiName);
 		ISqlHelper iSqlHelper=new SqliteHelper(null,mContext);
 		List<Object> list=iSqlHelper.Query("com.greeapp.Entity.UserMessage", null);
@@ -75,6 +72,8 @@ public class MainFragment extends DataRequestFragment implements OnClickListener
 		ll_waitWorkOrder.setOnClickListener((OnClickListener)this);
 		btn_refresh = (Button) view.findViewById(R.id.btn_refresh);
 		btn_refresh.setOnClickListener((OnClickListener)this);
+		dismissProgressDialog();
+	    showProgressDialog(getActivity(),"加载中...");
 		initData();
 		return view;
 	}
@@ -82,10 +81,8 @@ public class MainFragment extends DataRequestFragment implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		if(v==btn_refresh){
+			showProgressDialog(getActivity(),"加载中...");
 			initData();
-			/*Intent intent = new Intent();
-			intent.setClass(mContext, DataCollectionActivity.class);
-			startActivity(intent);*/
 		}
 		if(v==ll_infoQuery){
 			Intent intent = new Intent();
@@ -111,12 +108,12 @@ public class MainFragment extends DataRequestFragment implements OnClickListener
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode==2||resultCode==3){
+			showProgressDialog(getActivity(),"数据更新中...");
 			initData();
 		}
 	}
 
 	private void initData() {
-		showProgressDialog(getActivity(),"加载中...");
 		RequestUtility myru = new RequestUtility();
 		myru.setIP(null);
 		myru.setMethod("WorkSystemService", "queryWorkState");
@@ -128,8 +125,7 @@ public class MainFragment extends DataRequestFragment implements OnClickListener
 		myru.setParams(requestCondition);
 		myru.setNotification(currentNotiName);
 		setRequestUtility(myru);
-		requestData();
-		
+		requestData();		
 	}
 
 	@Override
@@ -142,38 +138,60 @@ public class MainFragment extends DataRequestFragment implements OnClickListener
 				if(CurrentAction==currentNotiName){
 					if (realData.getResultcode().equals("1")) {
 						WorkState ws = (WorkState) realData.getResult().get(0);
-						ISqlHelper iSqlHelper = new SqliteHelper(null,mContext);	
+						ISqlHelper iSqlHelper = new SqliteHelper(null,mContext);
 						String sql = "update UserMessage set Name = '"+ws.StaffName+"',WebName = '"+ws.NetPointName+"' where UserName='"+UserName+"'";
 						iSqlHelper.SQLExec(sql);
-						Message message = new Message();
-						message.obj = ws;
-						handler.sendMessage(message);
+						LocalWorkState lws = new LocalWorkState();
+						lws.AutoID=1;
+						lws.NetPointName=ws.NetPointName;
+						lws.StaffName = ws.StaffName;
+						lws.WorkUnderProcNumber =ws.WorkUnderProcNumber;
+						lws.WorkWaitedNumber =  ws.WorkWaitedNumber;		
+						List<Object> ls = iSqlHelper.Query("com.greeapp.Entity.LocalWorkState","AutoID=1");
+						if(ls.size()>0){
+							String sql1 = "update LocalWorkState set StaffName = '"+ws.StaffName+"',NetPointName = '"+ws.NetPointName+"',WorkUnderProcNumber ='"+ws.WorkUnderProcNumber+"',WorkWaitedNumber='"+ws.WorkWaitedNumber+"' where AutoID=1";
+							iSqlHelper.SQLExec(sql1);
+						}else{
+							iSqlHelper.Insert(lws);
+						}
+						handler.sendEmptyMessage(0);
 					}else{
+						handler.sendEmptyMessage(0);
 						DefaultTip(getActivity(),"暂无数据");	
-					 }
+					}
 				}
 			}else{
+				handler.sendEmptyMessage(0);
 				DefaultTip(getActivity(),"网络数据获取失败");	
 		   }
 		}else{
+			handler.sendEmptyMessage(0);
 			DefaultTip(getActivity(),"网络数据获取失败");	
 		}
 	}
 	Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
-			WorkState ws = (WorkState) msg.obj;
-			tv_UserRealName.setText(ws.StaffName);
-			tv_WebName.setText(ws.NetPointName);
-			tv_WorkWaitedNumber.setText("("+ws.WorkWaitedNumber+")");
-			tv_WorkUnderProcNumber.setText("("+ws.WorkUnderProcNumber+")");
-		
-		}
+			ISqlHelper iSqlHelper = new SqliteHelper(null,mContext);
+			List<Object> ls = iSqlHelper.Query("com.greeapp.Entity.LocalWorkState","AutoID=1");
+			if(ls.size()>0){
+				LocalWorkState lws = (LocalWorkState) ls.get(0);
+				tv_UserRealName.setText(lws.StaffName);
+				tv_WebName.setText(lws.NetPointName);
+				tv_WorkWaitedNumber.setText("("+lws.WorkWaitedNumber+")");
+				tv_WorkUnderProcNumber.setText("("+lws.WorkUnderProcNumber+")");	
+			}else{
+				tv_UserRealName.setText("无");
+				tv_WebName.setText("无");
+				tv_WorkWaitedNumber.setText("(0)");
+				tv_WorkUnderProcNumber.setText("(0)");
+			}
+				
+		 }
 	};
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		//initData();
 	}
 }

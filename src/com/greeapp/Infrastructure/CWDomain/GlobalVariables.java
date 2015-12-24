@@ -4,7 +4,7 @@ import android.app.Activity;
 
 public class GlobalVariables {
 	//用于标识数据是在线所取还是本地获取
-	public  static final boolean ISLOCALDATA=true;
+	public  static final boolean ISLOCALDATA=false;
 	
 	//用于网络访问的标识
 	public static final String ACTION_DATA_RELOAD_OK="com.chinawit.data_reload_ok";
